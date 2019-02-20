@@ -5,14 +5,13 @@ import discord
 import os
 
 TOKEN = os.environ.get('TOKEN')
-
 channel_handles = {}
-client = commands.Bot(command_prefix = "\\")
+client = commands.Bot(command_prefix = "==")
 client.remove_command("help")
 
 @client.event
 async def on_ready():
-    await client.change_presence(game=discord.Game(name="\help"))
+    await client.change_presence(game=discord.Game(name="dlog.hitsounds.moe"))
     print ("Bot is ready")
     print('Logged in as')
     print(client.user.name)
@@ -26,6 +25,10 @@ async def on_message(ctx):
 			channel_handles[ctx.channel.id] = open(os.path.join("logs",ctx.server.id, f"{ctx.channel.id}.txt"), "a")
 		else:
 			try:
+				os.mkdir("logs")
+			except:
+				pass
+			try:
 				os.mkdir(f"logs/{ctx.server.id}")
 			except:
 				pass
@@ -33,20 +36,24 @@ async def on_message(ctx):
 			channel_handles[ctx.channel.id].write("Time | UserID | Message_Content")
 	channel_handles[ctx.channel.id].write(f"\n{datetime.now()} | {ctx.author.id} | {ctx.content}")
 	channel_handles[ctx.channel.id].flush()
-	await client.process_commands(message)
+	await client.process_commands(ctx)
 
 
 @client.command(pass_context=True)
 async def me(ctx):
     await client.say("HI, I keep logs so you don't have to!")
 
+@client.command
+async def code():
+		await client.say("Deployed: https://repl.it/@Hitsounds/replit-bot, Github: https://github.com/Hitsounds/repl.it-bot")
+
 @client.command(pass_context=True)
 async def help(ctx):
-    await client.send_message(ctx.message.author, "\\me")
+    await client.send_message(ctx.message.author, "==me")
 
 @client.command(pass_context=True)
 async def log(ctx):
-	await client.say(f"https://UrbanAwareStatistics--hitsounds.repl.co/{ctx.server.id}/{ctx.channel.id}.txt")
+	await client.say(f"http://dlog.hitsounds.moe/{ctx.server.id}/{ctx.channel.id}.txt")
 
 
 keep_alive()
