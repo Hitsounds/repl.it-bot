@@ -23,7 +23,7 @@ def _log_servers():
 def _channels_inserver(path):
 	string = "Channels:<ul>"
 	for i in os.listdir(f"logs/{path}"):
-		string += (f"<li><a href=/logs/servers/{path}/{i}>{i}")
+		string += (f"<li><a href=/logs/servers/{path}/{i}>{i}<a download href=/logs/servers/{path}/{i}>⬇️")
 	return string
 
 @app.route("/logs/servers/<path:serverid>/<path:channelid>")
