@@ -33,6 +33,7 @@ async def on_message(ctx):
 			channel_handles[ctx.channel.id].write("Time | UserID | Message_Content")
 	channel_handles[ctx.channel.id].write(f"\n{datetime.now()} | {ctx.author.id} | {ctx.content}")
 	channel_handles[ctx.channel.id].flush()
+	await client.process_commands(message)
 
 
 @client.command(pass_context=True)
