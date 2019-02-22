@@ -34,7 +34,7 @@ async def on_message(ctx):
 			except:
 				pass
 			channel_handles[ctx.channel.id] = open(os.path.join("logs",ctx.server.id,f"{ctx.channel.id}.html"), "a")
-			channel_handles[ctx.channel.id].write("<table><thead><tr><th>Time</th><th>UserID</th><th>Message</th></tr></thead><tbody>")
+			channel_handles[ctx.channel.id].write(r"<head><style>table, th, td {border: 1px solid black;border-collapse: collapse;}; </style></head><body><table style=\"width:100%\"><thead><tr><th>Time</th><th>UserID</th><th>Message</th></tr></thead><tbody>")
 	channel_handles[ctx.channel.id].write(f"<tr><td>{datetime.now()}</td><td>{ctx.author.id}</td><td>{html.escape(ctx.content)}</td></tr>")
 	channel_handles[ctx.channel.id].flush()
 	await client.process_commands(ctx)
