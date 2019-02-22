@@ -3,6 +3,7 @@ from discord.ext import commands
 from datetime import datetime
 import discord
 import os
+import html
 
 TOKEN = os.environ.get('TOKEN')
 channel_handles = {}
@@ -32,9 +33,9 @@ async def on_message(ctx):
 				os.mkdir(f"logs/{ctx.server.id}")
 			except:
 				pass
-			channel_handles[ctx.channel.id] = open(os.path.join("logs",ctx.server.id,f"{ctx.channel.id}.txt"), "a")
-			channel_handles[ctx.channel.id].write("Time | UserID | Message_Content")
-	channel_handles[ctx.channel.id].write(f"\n{datetime.now()} | {ctx.author.id} | {ctx.content}")
+			channel_handles[ctx.channel.id] = open(os.path.join("logs",ctx.server.id,f"{ctx.channel.id}.html"), "a")
+			channel_handles[ctx.channel.id].write("<table><thead><tr><th>Time</th><th>UserID</th><th>Message</th></tr></thead><tbody>")
+	channel_handles[ctx.channel.id].write(f"<tr><td>{datetime.now()}</td><td>{ctx.author.id}</td><td>{html.escape(ctx.content)}</td></tr>")
 	channel_handles[ctx.channel.id].flush()
 	await client.process_commands(ctx)
 
