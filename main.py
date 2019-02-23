@@ -57,5 +57,4 @@ async def log(ctx):
 	await client.say(f"http://dlog.hitsounds.moe/{ctx.server.id}/{ctx.channel.id}.txt")
 
 
-keep_alive()
 client.run(TOKEN)

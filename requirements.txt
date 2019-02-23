@@ -3,3 +3,4 @@ discord.py
 datetime
 python-dotenv
 flask
+gunicorn

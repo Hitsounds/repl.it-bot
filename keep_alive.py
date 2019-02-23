@@ -30,10 +30,7 @@ def _channels_inserver(path):
 def _get_logfile(serverid, channelid):
 	return send_file(os.path.join("logs",serverid,channelid))
 
-def run():
-  app.run(host='0.0.0.0',port=8080)
-
-def keep_alive():  
-    t = Thread(target=run)
-    t.start()
+#def keep_alive():  
+#   t = Thread(target=run)
+#    t.start()
 	
