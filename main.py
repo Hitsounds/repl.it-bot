@@ -3,8 +3,9 @@ from discord.ext import commands
 from datetime import datetime
 import discord
 import os
-import html
+import logging
 
+logging.basicConfig(level=logging.INFO)
 TOKEN = os.environ.get('TOKEN')
 channel_handles = {}
 client = commands.Bot(command_prefix = "==")
@@ -33,20 +34,17 @@ async def on_message(ctx):
 				os.mkdir(f"logs/{ctx.server.id}")
 			except:
 				pass
-			channel_handles[ctx.channel.id] = open(os.path.join("logs",ctx.server.id,f"{ctx.channel.id}.html"), "a")
-			channel_handles[ctx.channel.id].write(r"<head><style>table, th, td {border: 1px solid black;border-collapse: collapse;}; </style></head><body><table style=\"width:100%\"><thead><tr><th>Time</th><th>UserID</th><th>Message</th></tr></thead><tbody>")
-	channel_handles[ctx.channel.id].write(f"<tr><td>{datetime.now()}</td><td>{ctx.author.id}</td><td>{html.escape(ctx.content)}</td></tr>")
+			channel_handles[ctx.channel.id] = open(os.path.join("logs",ctx.server.id,f"{ctx.channel.id}.txt"), "a")
+			channel_handles[ctx.channel.id].write("Time | UserID | Message_Content")
+	channel_handles[ctx.channel.id].write(f"\n{datetime.now()} | {ctx.author.id} | {ctx.content}")
 	channel_handles[ctx.channel.id].flush()
+	os.fsync(channel_handles[ctx.channel.id].fileno())
 	await client.process_commands(ctx)
 
 
 @client.command(pass_context=True)
 async def me(ctx):
-    await client.say("HI, I keep logs so you don't have to!")
-
-@client.command
-async def code():
-		await client.say("Deployed: https://repl.it/@Hitsounds/replit-bot, Github: https://github.com/Hitsounds/repl.it-bot")
+    await client.say("HI, I keep logs so you don't have to! ==log")
 
 @client.command(pass_context=True)
 async def help(ctx):
@@ -54,7 +52,7 @@ async def help(ctx):
 
 @client.command(pass_context=True)
 async def log(ctx):
-	await client.say(f"http://dlog.hitsounds.moe/{ctx.server.id}/{ctx.channel.id}.txt")
+	await client.say(f"http://dlog.hitsounds.moe/{ctx.message.server.id}/{ctx.message.channel.id}.txt")
 
 
 keep_alive()
