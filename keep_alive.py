@@ -4,6 +4,8 @@ import os
 
 app = Flask("")
 
+print("Marvel Sux")
+
 @app.route('/')
 def _home():
     return "BOT Alive and healthy! <a href=/logs/servers/>logs "
