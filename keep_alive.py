@@ -4,7 +4,7 @@ import os
 
 app = Flask("")
 
-print("Marvel Sux")
+print("Marvel is a dictator my family are being held hostage please hel-")
 
 @app.route('/')
 def _home():
