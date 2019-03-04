@@ -6,7 +6,7 @@ import os
 import logging
 
 import dotenv
-dotenv.load_dotenv("/.env")
+dotenv.load_dotenv(".env")
 
 logging.basicConfig(level=logging.INFO)
 TOKEN = os.environ.get('TOKEN')
